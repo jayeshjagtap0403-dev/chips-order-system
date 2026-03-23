@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MH19 Chipsvala - Order</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+body{background:#fff8e1;}
+header{background:#ff6f00;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;}
+.hero{height:280px;background:url("https://images.unsplash.com/photo-1585238342024-78d387f4a707") center/cover;display:flex;align-items:center;justify-content:center;color:white;font-size:32px;font-weight:bold;}
+.section{padding:40px 8%;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.card{background:white;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);padding:15px;text-align:center;}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px;}
+.card h3{margin:10px 0;}
+.price{color:#ff6f00;font-weight:bold;font-size:18px;}
+button{background:#ff6f00;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;}
+button:hover{background:#e65100;}
+#orderForm{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;box-shadow:0 5px 25px rgba(0,0,0,0.3);border-radius:10px;}
+#orderForm input{padding:8px;margin:5px;width:220px;}
+footer{margin-top:40px;background:#ff6f00;color:white;text-align:center;padding:15px;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>MH19 Chipsvala</h2>
+</header>
+
+<div class="hero">Fresh & Crispy Banana Chips</div>
+
+<section class="section">
+<h2 style="text-align:center;margin-bottom:30px;color:#ff6f00;">Our Products</h2>
+
+<div class="products">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1604908554165-e946f41a0b5d">
+<h3>Pani Puri Banana Chips</h3>
+<p class="price">₹99</p>
+<button onclick="openOrder('Pani Puri Banana Chips',99)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707">
+<h3>Masala Banana Chips</h3>
+<p class="price">₹99</p>
+<button onclick="openOrder('Masala Banana Chips',99)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087">
+<h3>Black Pepper Banana Chips</h3>
+<p class="price">₹110</p>
+<button onclick="openOrder('Black Pepper Banana Chips',110)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b">
+<h3>Jeera Banana Chips</h3>
+<p class="price">₹110</p>
+<button onclick="openOrder('Jeera Banana Chips',110)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1514516873439-dc18c5e3e74a">
+<h3>Cheese Banana Chips</h3>
+<p class="price">₹120</p>
+<button onclick="openOrder('Cheese Banana Chips',120)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1598514982849-08f75d2a7c76">
+<h3>Tomato Banana Chips</h3>
+<p class="price">₹120</p>
+<button onclick="openOrder('Tomato Banana Chips',120)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+<h3>Garlic Mix Farsan</h3>
+<p class="price">₹99</p>
+<button onclick="openOrder('Garlic Mix Farsan',99)">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+<h3>Masala Mix Farsan</h3>
+<p class="price">₹99</p>
+<button onclick="openOrder('Masala Mix Farsan',99)">Order Now</button>
+</div>
+
+</div>
+</section>
+
+<div id="orderForm">
+<h3>Place Order</h3>
+<input id="name" placeholder="Your Name"><br>
+<input id="address" placeholder="Delivery Address"><br>
+<input id="product" readonly><br>
+<input id="price" readonly><br><br>
+<button onclick="placeOrder()">Confirm Order</button>
+</div>
+
+<footer>© 2026 MH19 Chipsvala</footer>
+
+<script>
+function openOrder(product,price){
+document.getElementById("orderForm").style.display="block";
+document.getElementById("product").value=product;
+document.getElementById("price").value="₹"+price;
+}
+
+function placeOrder(){
+let name=document.getElementById("name").value;
+let address=document.getElementById("address").value;
+let product=document.getElementById("product").value;
+let price=document.getElementById("price").value;
+
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+
+orders.push({
+name:name,
+product:product,
+price:price,
+address:address,
+status:"Pending"
+});
+
+localStorage.setItem("orders",JSON.stringify(orders));
+
+alert("Order Placed!");
+document.getElementById("orderForm").style.display="none";
+}
+</script>
+
+</body>
+</html>

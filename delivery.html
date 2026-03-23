@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Dashboard</title>
+
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:30px;}
+h2{text-align:center;color:#ff6f00;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:white;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+th,td{padding:12px;border:1px solid #ddd;text-align:center;}
+th{background:#ff6f00;color:white;}
+button{background:green;color:white;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;}
+.refresh{background:#ff6f00;margin-bottom:15px;}
+</style>
+</head>
+
+<body>
+
+<h2>Delivery Boy Dashboard</h2>
+<button class="refresh" onclick="loadOrders()">Refresh Orders</button>
+
+<table>
+<tr>
+<th>Customer</th>
+<th>Product</th>
+<th>Price</th>
+<th>Address</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+<tbody id="ordersTable"></tbody>
+</table>
+
+<script>
+function loadOrders(){
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+let table=document.getElementById("ordersTable");
+table.innerHTML="";
+
+orders.forEach((order,index)=>{
+table.innerHTML+=`
+<tr>
+<td>${order.name}</td>
+<td>${order.product}</td>
+<td>${order.price}</td>
+<td>${order.address}</td>
+<td>${order.status}</td>
+<td><button onclick="markDelivered(${index})">Delivered</button></td>
+</tr>
+`;
+});
+}
+
+function markDelivered(i){
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+orders[i].status="Delivered";
+localStorage.setItem("orders",JSON.stringify(orders));
+loadOrders();
+}
+
+loadOrders();
+</script>
+
+</body>
+</html>
